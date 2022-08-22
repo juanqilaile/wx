@@ -3,7 +3,6 @@ import math
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
-from zhdate import ZhDate
 import os
 import random
 
@@ -31,9 +30,9 @@ def get_count():
 
 def get_birthday():
   next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
-  if next < ZhDate(datatime.date.today().year, datatime.date.today().month, datatime.date.today().day):
+  if next < datatime.now():
     next = next.replace(year=next.year + 1)
-  return (next - ZhDate(datatime.date.today().year, datatime.date.today().month, datatime.date.today().day)).days
+  return (next - today).days
 
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
