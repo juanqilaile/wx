@@ -19,10 +19,11 @@ template_id = os.environ["TEMPLATE_ID"]
 
 
 def get_weather():
-  url = "http://autodev.openspeech.cn/csp/api/v2.1/weather?openId=aiuicus&clientType=android&sign=android&city=" + city
+  url = "https://restapi.amap.com/v3/weather/weatherInfo?city=130802&key=0585d5f62dbbb2d1a98ede613a459885&extensions=all"
   res = requests.get(url).json()
-  weather = res['data']['list'][0]
-  return weather['weather'], math.floor(weather['temp'])
+  return res['forecasts'][0]['casts'][1]['dayweather'],res['forecasts'][0]['casts'][1]['nightweather'],res['forecasts'][0]['casts'][1]['daytemp'],res['forecasts'][0]['casts'][1]['nighttemp'],
+  res['forecasts'][0]['casts'][2]['dayweather'],res['forecasts'][0]['casts'][2]['nightweather'],res['forecasts'][0]['casts'][2]['daytemp'],res['forecasts'][0]['casts'][2]['nighttemp']
+  
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -47,7 +48,7 @@ def get_random_color():
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
-wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+jdayweather, jnightweather, jdaytemp, jnighttemp ,mdayweather, mnightweather, mdaytemp, mnighttemp = get_weather()
+data = {"jdayweather":{"value":jdayweather},{"jnightweather":{"value":jnightweather},{"jdaytemp":{"value":jdaytemp},{"jnighttemp":{"value":jnighttemp},{"mdayweather":{"value":mdayweather},{"mnightweather":{"value":mnightweather},{"mdaytemp":{"value":mdaytemp},{"mnighttemp":{"value":mnighttemp},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
