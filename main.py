@@ -3,7 +3,7 @@ import math
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
 import requests
-from ZhDate import zhdate
+from zhdate import ZhDate
 import os
 import random
 
