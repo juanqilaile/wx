@@ -29,8 +29,10 @@ def get_count():
   return delta.days
 
 def get_birthday():
-  oneDay = datetime(datetime.today().year+","+birthday)
-  return oneDay.toordinal()-today.toordinal()
+  next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
+  if next < ZhDate(datatime.date.today().year, datatime.date.today().month, datatime.date.today().day):
+    next = next.replace(year=next.year + 1)
+  return (next - ZhDate(datatime.date.today().year, datatime.date.today().month, datatime.date.today().day)).days
 
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
