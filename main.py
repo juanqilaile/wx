@@ -30,7 +30,7 @@ def get_count():
   return delta.days
 
 def get_birthday():
-  a=datetime.date.today()
+  a=date.today()
   y=a.year
   m=a.month
   d=a.day
