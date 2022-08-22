@@ -29,7 +29,7 @@ def get_count():
   return delta.days
 
 def get_birthday():
-  oneDay = datetime(datetime.datetime.today().year+","+birthday)
+  oneDay = datetime(datetime.today().year+","+birthday)
   return oneDay.toordinal()-today.toordinal()
 
 def get_words():
