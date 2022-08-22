@@ -21,8 +21,8 @@ template_id = os.environ["TEMPLATE_ID"]
 def get_weather():
   url = "https://restapi.amap.com/v3/weather/weatherInfo?city=130802&key=0585d5f62dbbb2d1a98ede613a459885&extensions=all"
   res = requests.get(url).json()
-  return res['forecasts'][0]['casts'][1]['dayweather'],res['forecasts'][0]['casts'][1]['nightweather'],res['forecasts'][0]['casts'][1]['daytemp'],res['forecasts'][0]['casts'][1]['nighttemp'],
-  res['forecasts'][0]['casts'][2]['dayweather'],res['forecasts'][0]['casts'][2]['nightweather'],res['forecasts'][0]['casts'][2]['daytemp'],res['forecasts'][0]['casts'][2]['nighttemp']
+  return res['forecasts'][0]['casts'][1]['dayweather'],res['forecasts'][0]['casts'][1]['nightweather'],math.floor(res['forecasts'][0]['casts'][1]['daytemp']),math.floor(res['forecasts'][0]['casts'][1]['nighttemp']),
+  res['forecasts'][0]['casts'][2]['dayweather'],res['forecasts'][0]['casts'][2]['nightweather'],math.floor(res['forecasts'][0]['casts'][2]['daytemp']),math.floor(res['forecasts'][0]['casts'][2]['nighttemp'])
   
 
 def get_count():
@@ -49,6 +49,6 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 jdayweather, jnightweather, jdaytemp, jnighttemp ,mdayweather, mnightweather, mdaytemp, mnighttemp = get_weather()
-data = {"jdayweather":{"value":jdayweather},{"jnightweather":{"value":jnightweather},{"jdaytemp":{"value":jdaytemp},{"jnighttemp":{"value":jnighttemp},{"mdayweather":{"value":mdayweather},{"mnightweather":{"value":mnightweather},{"mdaytemp":{"value":mdaytemp},{"mnighttemp":{"value":mnighttemp},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"jdayweather":{"value":jdayweather},"jnightweather":{"value":jnightweather},"jdaytemp":{"value":jdaytemp},"jnighttemp":{"value":jnighttemp},"mdayweather":{"value":mdayweather},"mnightweather":{"value":mnightweather},"mdaytemp":{"value":mdaytemp},"mnighttemp":{"value":mnighttemp},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
