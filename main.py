@@ -30,14 +30,10 @@ def get_count():
   return delta.days
 
 def get_birthday():
-  a=date.today()
-  y=a.year
-  m=a.month
-  d=a.day
   next = datetime.strptime(str(date.today().year) + "-" + birthday, "%Y-%m-%d")
-  if next < (ZhDate(y,m,d).to_datetime()):
+  if next < datetime.now():
     next = next.replace(year=next.year + 1)
-  return (next - ZhDate(y,m,d).to_datetime())
+  return (next - today).days
 
 def get_words():
   words = requests.get("https://api.shadiao.pro/chp")
