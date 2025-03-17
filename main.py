@@ -60,6 +60,6 @@ client = WeChatClient(app_id, app_secret)
 wm = WeChatMessage(client)
 content, note = get_words()
 jdayweather,jnightweather,jdaytemp,jnighttemp,mdayweather,mnightweather,mdaytemp,mnighttemp= get_weather()
-data = {"jdayweather":{"value":jdayweather},"jnightweather":{"value":jnightweather},"jdaytemp":{"value":jdaytemp},"jnighttemp":{"value":jnighttemp},"mdayweather":{"value":mdayweather},"mnightweather":{"value":mnightweather},"mdaytemp":{"value":mdaytemp},"mnighttemp":{"value":mnighttemp},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"zwords":{"value":content},,"ywords":{"value":note}}
+data = {"jdayweather":{"value":jdayweather},"jnightweather":{"value":jnightweather},"jdaytemp":{"value":jdaytemp},"jnighttemp":{"value":jnighttemp},"mdayweather":{"value":mdayweather},"mnightweather":{"value":mnightweather},"mdaytemp":{"value":mdaytemp},"mnighttemp":{"value":mnighttemp},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"zwords":{"value":content},"ywords":{"value":note}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
