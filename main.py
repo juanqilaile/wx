@@ -35,10 +35,21 @@ def get_birthday():
   return (next - today).days
 
 def get_words():
-  words = requests.get("https://api.shadiao.pro/chp")
-  if words.status_code != 200:
-    return get_words()
-  return words.json()['data']['text']
+    # 发送请求获取数据
+    response = requests.get("http://api.tianapi.com/everyday/index?key=d6dc42eacf22161cc5536076302cc0e1")
+    
+    # 检查请求是否成功
+    if response.status_code != 200:
+        return get_words()  # 如果请求失败，递归调用自身重试
+    
+    # 解析 JSON 数据
+    data = response.json()
+    
+    # 提取 content 和 note 字段
+    content = data['newslist'][0]['content']
+    note = data['newslist'][0]['note']
+    
+    return content, note
 
 def get_random_color():
   return "#%06x" % random.randint(0, 0xFFFFFF)
@@ -47,7 +58,8 @@ def get_random_color():
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
+content, note = get_words()
 jdayweather,jnightweather,jdaytemp,jnighttemp,mdayweather,mnightweather,mdaytemp,mnighttemp= get_weather()
-data = {"jdayweather":{"value":jdayweather},"jnightweather":{"value":jnightweather},"jdaytemp":{"value":jdaytemp},"jnighttemp":{"value":jnighttemp},"mdayweather":{"value":mdayweather},"mnightweather":{"value":mnightweather},"mdaytemp":{"value":mdaytemp},"mnighttemp":{"value":mnighttemp},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"jdayweather":{"value":jdayweather},"jnightweather":{"value":jnightweather},"jdaytemp":{"value":jdaytemp},"jnighttemp":{"value":jnighttemp},"mdayweather":{"value":mdayweather},"mnightweather":{"value":mnightweather},"mdaytemp":{"value":mdaytemp},"mnighttemp":{"value":mnighttemp},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"zwords":{"value":content},,"ywords":{"value":note}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
